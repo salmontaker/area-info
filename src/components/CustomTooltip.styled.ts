@@ -9,5 +9,5 @@ export const Tooltip = styled.div`
 
 export const TooltipText = styled.div<{ color?: string }>`
   padding: 2px;
-  color: ${(props) => props.color || ''};
+  color: ${({ color }) => color || ''};
 `

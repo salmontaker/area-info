@@ -4,17 +4,25 @@ interface DataService<T> {
   getData(): T
 }
 
-interface DataDTO {
-  [timestamp: string]: {
-    id: string
-    value_area: number
-    value_bar: number
-  }
+export interface AreaData {
+  timestamp: string
+  id: string
+  value_area: number
+  value_bar: number
 }
 
-class DataServiceImpl implements DataService<DataDTO> {
-  getData(): DataDTO {
-    return mockData.response as DataDTO
+class DataServiceImpl implements DataService<AreaData[]> {
+  getData(): AreaData[] {
+    const data = Object.entries(mockData.response).map(
+      ([timestamp, { id, value_area, value_bar }]) => ({
+        timestamp,
+        id,
+        value_area,
+        value_bar,
+      })
+    )
+
+    return data
   }
 }
 
