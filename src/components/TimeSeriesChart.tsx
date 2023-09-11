@@ -10,6 +10,7 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 
+import CustomToolTip from './CustomTooltip'
 import { DataContext } from '../context/DataContext'
 import { useCustomContext } from '../hooks/useCustomContext'
 
@@ -60,7 +61,7 @@ function TimeSeriesChart() {
           orientation="right"
           yAxisId="right"
         />
-        <Tooltip />
+        <Tooltip content={<CustomToolTip />} />
         <Legend />
         <Bar barSize={30} dataKey="value_bar" fill="#82ca9d" yAxisId="right" />
         <Area dataKey="value_area" fill="#8884d8" type="monotone" yAxisId="left" />
