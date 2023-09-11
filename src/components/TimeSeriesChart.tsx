@@ -23,7 +23,7 @@ function TimeSeriesChart() {
   const [areaData, setAreaData] = useState<AreaData[]>([])
   const { dataService } = useCustomContext(DataContext)
 
-  const [areaId, setId] = useState<string[]>([])
+  const [areaId, setAreaId] = useState<string[]>([])
   const [selectedId, setSelectedId] = useState('')
 
   const toggleId = (id: string) => {
@@ -34,7 +34,7 @@ function TimeSeriesChart() {
     const data = dataService.getData()
 
     setAreaData(data)
-    setId(Array.from(new Set(data.map((item) => item.id))))
+    setAreaId(Array.from(new Set(data.map((item) => item.id))))
   }, [])
 
   return (
