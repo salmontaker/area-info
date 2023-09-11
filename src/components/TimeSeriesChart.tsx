@@ -13,28 +13,14 @@ import {
 import CustomToolTip from './CustomTooltip'
 import { DataContext } from '../context/DataContext'
 import { useCustomContext } from '../hooks/useCustomContext'
-
-interface ConvertedData {
-  timestamp: string
-  id: string
-  value_area: number
-  value_bar: number
-}
+import { AreaData } from '../service/DataService'
 
 function TimeSeriesChart() {
-  const [data, setData] = useState<ConvertedData[]>([])
+  const [data, setData] = useState<AreaData[]>([])
   const { dataService } = useCustomContext(DataContext)
 
   useEffect(() => {
-    const convertedData = Object.entries(dataService.getData()).map(
-      ([timestamp, { id, value_area, value_bar }]) => ({
-        timestamp,
-        id,
-        value_area,
-        value_bar,
-      })
-    )
-    setData(convertedData)
+    setData(dataService.getData())
   }, [])
 
   return (
