@@ -48,7 +48,7 @@ function TimeSeriesChart() {
           bottom: 30,
         }}
       >
-        <XAxis dataKey="timestamp" />
+        <XAxis dataKey="timestamp" tickFormatter={(value: string) => value.split(' ')[1]} />
         <YAxis
           dataKey="value_area"
           domain={[0, 200]}
