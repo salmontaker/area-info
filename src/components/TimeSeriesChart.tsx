@@ -1,5 +1,14 @@
 import { useEffect, useState } from 'react'
-import ReactApexChart from 'react-apexcharts'
+import {
+  ComposedChart,
+  Area,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts'
 
 import { DataContext } from '../context/DataContext'
 import { useCustomContext } from '../hooks/useCustomContext'
@@ -28,36 +37,35 @@ function TimeSeriesChart() {
   }, [])
 
   return (
-    <>
-      <ReactApexChart
-        width={'100%'}
-        height={'90%'}
-        options={{
-          chart: { type: 'line' },
-          labels: data.map((item) => item.timestamp),
-          xaxis: {
-            type: 'datetime',
-          },
-          yaxis: [
-            {
-              title: {
-                text: 'Area',
-              },
-            },
-            {
-              opposite: true,
-              title: {
-                text: 'Bar',
-              },
-            },
-          ],
+    <ResponsiveContainer>
+      <ComposedChart
+        data={data}
+        margin={{
+          top: 30,
+          right: 50,
+          left: 30,
+          bottom: 30,
         }}
-        series={[
-          { name: 'Area', type: 'column', data: data.map((item) => item.value_area) },
-          { name: 'Bar', type: 'column', data: data.map((item) => item.value_bar) },
-        ]}
-      />
-    </>
+      >
+        <XAxis dataKey="timestamp" />
+        <YAxis
+          dataKey="value_area"
+          domain={[0, 200]}
+          label={{ value: 'Area', angle: -90, dx: -20 }}
+          yAxisId="left"
+        />
+        <YAxis
+          dataKey="value_bar"
+          label={{ value: 'Bar', angle: 90, dx: 40 }}
+          orientation="right"
+          yAxisId="right"
+        />
+        <Tooltip />
+        <Legend />
+        <Bar barSize={30} dataKey="value_bar" fill="#82ca9d" yAxisId="right" />
+        <Area dataKey="value_area" fill="#8884d8" type="monotone" yAxisId="left" />
+      </ComposedChart>
+    </ResponsiveContainer>
   )
 }
 
