@@ -3,7 +3,6 @@ import {
   ComposedChart,
   Area,
   Bar,
-  Cell,
   XAxis,
   YAxis,
   Tooltip,
@@ -18,6 +17,8 @@ import { AreaData } from '../service/DataService'
 import colors from '../styles/constants/colors'
 
 import * as S from './TimeSeriesChart.styled'
+import TimeSeriesChartButtons from './TimeSeriesChartButtons'
+import TimeSeriesChartCells from './TimeSeriesChartCells'
 
 function TimeSeriesChart() {
   const [areaData, setAreaData] = useState<AreaData[]>([])
@@ -40,11 +41,7 @@ function TimeSeriesChart() {
   return (
     <>
       <S.ButtonWrapper>
-        {areaId.map((id) => (
-          <S.Button key={id} $isSelected={id === selectedId} onClick={() => toggleId(id)}>
-            {id}
-          </S.Button>
-        ))}
+        <TimeSeriesChartButtons areaId={areaId} selectedId={selectedId} toggleId={toggleId} />
       </S.ButtonWrapper>
       <ResponsiveContainer height="90%">
         <ComposedChart
@@ -76,16 +73,9 @@ function TimeSeriesChart() {
             dataKey="value_bar"
             fill={colors.barColor}
             yAxisId="right"
-            onClick={(data: AreaData) => {
-              toggleId(data.id)
-            }}
+            onClick={(data: AreaData) => toggleId(data.id)}
           >
-            {areaData.map((item, index) => (
-              <Cell
-                key={index}
-                fill={item.id === selectedId ? colors.selectedColor : colors.barColor}
-              />
-            ))}
+            {TimeSeriesChartCells({ areaData, selectedId })}
           </Bar>
           <Area dataKey="value_area" fill={colors.areaColor} type="monotone" yAxisId="left" />
         </ComposedChart>
