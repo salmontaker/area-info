@@ -13,14 +13,10 @@ export interface AreaData {
 
 class DataServiceImpl implements DataService<AreaData[]> {
   getData(): AreaData[] {
-    const data = Object.entries(mockData.response).map(
-      ([timestamp, { id, value_area, value_bar }]) => ({
-        timestamp,
-        id,
-        value_area,
-        value_bar,
-      })
-    )
+    const data = Object.entries(mockData.response).map(([timestamp, value]) => ({
+      timestamp,
+      ...value,
+    }))
 
     return data
   }
